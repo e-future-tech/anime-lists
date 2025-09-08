@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+
+class favorite extends Model
+{
+    protected $fillable = ['user_id', 'mal_id', "img", 'title', 'type', 'episodes', "genres", "status", "year", "rating", "synopsis", "score"];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
