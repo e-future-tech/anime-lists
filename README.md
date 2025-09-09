@@ -1,6 +1,6 @@
 Project anime list dimana user dapat mencari anime dan menyimpan anime favorit mereka
 
-Structures & Tech
+Tech
 - Laravel
 - Laravel Breeze
 - React.js
