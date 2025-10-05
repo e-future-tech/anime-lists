@@ -1,13 +1,10 @@
 import { Link, usePage } from "@inertiajs/react"
-import { Head } from '@inertiajs/react';
 
 const styleNav = "nav-link text-dark";
 const styleNavActive = "nav-link text-dark fw-bold";
 
 const styleDropDown = "dropdown-item";
 const styleDropDownActive = "dropdown-item fw-bold";
-
-
 
 export default function Layout({ children }) {
 
@@ -16,13 +13,11 @@ export default function Layout({ children }) {
 
     return (
         <>
-            <Head title={url} />
             <header className="my-3">
                 <nav className="nav-bar d-flex justify-content-center gap-3">
                     <Link className={url == '/' ? styleNavActive : styleNav} href={'/'}>Home</Link>
-                    <Link className={url == '/search' ? styleNavActive : styleNav} href={'/search'}>Search</Link>
                     <Link className={url == '/seasons' ? styleNavActive : styleNav} href={'/seasons'}>Seasons</Link>
-                    <Link className={url == '/top' ? styleNavActive : styleNav} href={'/top'}>Top Anime</Link>
+                    <Link className={url == '/top/1' ? styleNavActive : styleNav} href={'/top/1'}>Top Anime</Link>
 
                     <Link className={url == '/about' ? styleNavActive : styleNav} href={'/about'}>About</Link>
 
@@ -39,6 +34,9 @@ export default function Layout({ children }) {
                                     </li>
                                     <li>
                                         <Link className={url == '/favorite' ? styleDropDownActive : styleDropDown} href={'/favorite'}>Favorite</Link>
+                                    </li>
+                                    <li>
+                                        <Link className={url == '/wishlist' ? styleDropDownActive : styleDropDown} href={'/wishlist'}>Wishlist</Link>
                                     </li>
                                     <li>
                                         <Link method="post" className={url == '/logout' ? styleDropDownActive : styleDropDown} href={'/logout'}>Logout</Link>

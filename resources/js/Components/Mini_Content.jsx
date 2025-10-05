@@ -6,7 +6,7 @@ export function Mini_Content({ data }) {
     return <>
 
         <div className="container">
-            <p className="text-center border-bottom my-2">Top Airing</p>
+            <p className="text-center border-bottom my-2">Top Upcoming</p>
             <div className="d-flex justify-content-center flex-wrap gap-2">
                 {
                     data.map((row) =>

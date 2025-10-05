@@ -23,10 +23,12 @@ class DetailController extends Controller
 
         if ($this->user != null) {
             $favorites_id = $this->user->favorites()->pluck("mal_id")->toArray();
+            $wishlist_id = $this->user->Wishlists()->pluck("mal_id")->toArray();
 
             $data["favorited"] = in_array($data["mal_id"], $favorites_id);
+            $data["wishlist"] = in_array($data["mal_id"], $wishlist_id);
         }
 
-        return Inertia::render('Detail', ['row' => $data]);
+        return Inertia::render('Detail', ['row' => $data, 'title' => "Detail"]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\favorite;
+use App\Models\Wishlist;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,5 +51,10 @@ class User extends Authenticatable
     public function favorites()
     {
         return $this->hasMany(favorite::class);
+    }
+
+    public function Wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
     }
 }

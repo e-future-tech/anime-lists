@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\jikanModel;
 use Auth;
-use Exception;
-use Illuminate\Support\Facades\Request;
 
-use function Laravel\Prompts\error;
 
 class ContentController extends Controller
 {
@@ -20,26 +17,34 @@ class ContentController extends Controller
         $this->user = Auth::user();
     }
 
-    public function index($keywords = "")
+    public function contents_by_user($data)
     {
 
-        $data = jikanModel::getByName($keywords);
+        $favorites_id = $this->user->favorites()->pluck("mal_id")->toArray();
+        $wishlists_Id = $this->user->Wishlists()->pluck("mal_id")->toArray();
 
-        $filter_data = $data["data"];
+        $filter_data = collect($data)->map(function ($row) use ($favorites_id, $wishlists_Id) {
+
+            $row["favorited"] = in_array($row["mal_id"], $favorites_id);
+            $row["wishlist"] = in_array($row["mal_id"], $wishlists_Id);
+            return $row;
+        })->toArray();
+
+        return $filter_data;
+    }
+
+    public function search_by_name($keywords, $page = 1)
+    {
+        $data = jikanModel::getByName($keywords, $page);
+
+        $contents = $data["data"];
 
         // jika user ada
         if ($this->user != null) {
-            $favorites_id = $this->user->favorites()->pluck("mal_id")->toArray();
-
-            $filter_data = collect($data["data"])->map(function ($row) use ($favorites_id) {
-
-                $row["favorited"] = in_array($row["mal_id"], $favorites_id);
-
-                return $row;
-            });
+            $contents = $this->contents_by_user($data["data"]);
         }
 
-        return Inertia::render("Search", ['dataList' => $filter_data]);
+        return Inertia::render("Contents_page", ['dataList' => $contents, 'status' => "Search", 'statusPage' => 'pageJikan', 'pages' => $data["pagination"]]);
     }
 
     public function seasons()
@@ -47,57 +52,42 @@ class ContentController extends Controller
 
         $season = jikanModel::getSeasons();
 
-        return Inertia::render("Seasons", ['seasons' => $season["data"]]);
+        return Inertia::render("Seasons", ['seasons' => $season["data"], 'title' => 'Seasons']);
     }
 
-    public function season_Content($year, $season)
+    public function season_Content($year, $season, $page = 1)
     {
-        $data = jikanModel::getSeasonContent($year, $season);
+        $data = jikanModel::getSeasonContent($year, $season, $page);
 
-        $filter_data = $data["data"];
+        $contents = $data["data"];
 
         // jika user ada
         if ($this->user != null) {
-            $favorites_id = $this->user->favorites()->pluck("mal_id")->toArray();
-
-            $filter_data = collect($data["data"])->map(function ($row) use ($favorites_id) {
-
-                $row["favorited"] = in_array($row["mal_id"], $favorites_id);
-
-                return $row;
-            });
+            $contents = $this->contents_by_user($data["data"]);
         }
 
-        return Inertia::render("Status_Content", ['dataList' => $filter_data, 'status' => $season .  " " . $year]);
+        return Inertia::render("Contents_page", ['dataList' => $contents, 'status' => $season .  " " . $year, 'statusPage' => 'pageJikan', 'pages' => $data["pagination"], 'title' => 'Seasonal Anime']);
     }
 
-    public function Top_Anime()
+    public function Top_Anime($page)
     {
+        $data = jikanModel::getTopAnime($page);
 
-        $data = jikanModel::getTopAnime();
-
-        $filter_data = $data["data"];
+        $contents = $data["data"];
 
         // jika user ada
         if ($this->user != null) {
-            $favorites_id = $this->user->favorites()->pluck("mal_id")->toArray();
-
-            $filter_data = collect($data["data"])->map(function ($row) use ($favorites_id) {
-
-                $row["favorited"] = in_array($row["mal_id"], $favorites_id);
-
-                return $row;
-            });
+            $contents = $this->contents_by_user($data["data"]);
         }
 
-        return Inertia::render("TopAnime", ['dataList' => $filter_data]);
+        return Inertia::render("TopAnime", ['dataList' => $contents, 'status' => 'TOP ANIME', 'statusPage' => 'pageJikan', 'pages' => $data["pagination"], 'title' => 'Top Anime']);
     }
 
-    public function Top_Anime_airing()
+    public function Top_Anime_upcoming()
     {
-        $data = jikanModel::getTopAnimeByFilter("airing");
+        $data = jikanModel::getTopAnimeByFilter("upcoming");
 
-        $data_5 = array_slice($data["data"], 0, 7);
+        $data_5 = array_slice($data["data"], 0, 14);
 
         return Inertia::render("Home", ['dataList' => $data_5]);
     }

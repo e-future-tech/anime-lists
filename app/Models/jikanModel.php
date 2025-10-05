@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class jikanModel extends Model
 {
 
-    public static function getByName($keyword)
+    public static function getByName($keyword, $page)
     {
+        $query = 'https://api.jikan.moe/v4/anime?q=' . $keyword . '&page=' . $page;
 
-        $query = 'https://api.jikan.moe/v4/anime?q=' . $keyword;
         $http = Http::get($query)->json();
 
         return $http;
@@ -30,7 +30,15 @@ class jikanModel extends Model
         $query = 'https://api.jikan.moe/v4/anime/' . $id . '/recommendations';
         $http = Http::get($query)->json();
 
-        return $http;
+        $filter_data = [];
+
+        foreach ($http["data"] as $row) {
+            $row["entry"]["img"] = $row["entry"]["images"]["webp"]["image_url"];
+            unset($row["entry"]["images"]);
+            $filter_data[] = $row["entry"];
+        }
+
+        return $filter_data;
     }
 
     public static function getSeasons()
@@ -41,17 +49,17 @@ class jikanModel extends Model
         return $http;
     }
 
-    public static function getSeasonContent($year, $season)
+    public static function getSeasonContent($year, $season, $page = 1)
     {
-        $query = 'https://api.jikan.moe/v4/seasons/' . $year . '/' . $season;
+        $query = 'https://api.jikan.moe/v4/seasons/' . $year . '/' . $season . '?page=' . $page;
         $http = Http::get($query)->json();
 
         return $http;
     }
 
-    public static function getTopAnime()
+    public static function getTopAnime($page)
     {
-        $query = 'https://api.jikan.moe/v4/top/anime';
+        $query = 'https://api.jikan.moe/v4/top/anime?page=' . $page;
 
         $http = Http::get($query)->json();
 

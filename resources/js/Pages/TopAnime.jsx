@@ -1,20 +1,33 @@
 import { Head, Link, router } from "@inertiajs/react"
 
-import { FavoriteButtons } from "@/Components/saveButtons"
+import { FavoriteButtons } from "@/Components/FavoriteButton"
+import { PaginationJikan } from '@/Components/PaginationsJikan';
+import { Search_Content } from "../Components/Search_Content";
+import { WishlistButtons } from "@/Components/WishlistButton";
 
-export default function TopAnime({ dataList }) {
+export default function TopAnime({ dataList, title, status, statusPage, pages }) {
 
     const filter = [...dataList].sort((a, b) => a.rank - b.rank)
 
     return (
         <>
 
-            <Head title="Top Anime" />
+            <Head title={title} />
+
 
             <div className="container p-1">
+
+
+
+                <h3 className="border-bottom text-center text-secondary">{status}</h3>
+
+                <div className='d-flex justify-content-end mb-3'>
+                    <Search_Content />
+                </div>
+
                 {
                     filter.map((row) =>
-                        <div className="row bg-light mb-2 border rounded-3 shadow" key={row.mal_id}>
+                        <div className="row bg-light mb-3 border rounded-3 shadow" key={row.mal_id}>
                             <div className="col-2 col-md-2 col-lg-2 col-xl-1 d-flex align-items-center justify-content-center px-3">
                                 <div>
                                     <span className="text-uppercase">{row.season} {row.year}</span>
@@ -30,7 +43,10 @@ export default function TopAnime({ dataList }) {
                             <div className="col-6 col-md-6 col-lg-7 col-xl-9 p-1 position-relative">
 
                                 <div className="position-absolute bottom-0 py-2">
-                                    <FavoriteButtons row={row} />
+                                    <div className="d-flex gap-1">
+                                        <FavoriteButtons row={row} />
+                                        <WishlistButtons row={row} />
+                                    </div>
                                 </div>
 
                                 <div className="position-absolute bottom-0 end-0 p-2">
@@ -53,7 +69,14 @@ export default function TopAnime({ dataList }) {
                         </div>
                     )
                 }
+
+                {
+                    statusPage == "pageJikan" ? <PaginationJikan pageJikan={pages} /> : null
+                }
             </div>
+
+
+
         </>
     )
 }

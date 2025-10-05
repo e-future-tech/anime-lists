@@ -1,5 +1,6 @@
 import { Mini_Content } from "../Components/Mini_Content";
 import { Head, Link } from "@inertiajs/react"
+import { Search_Content } from "@/Components/Search_Content";
 
 export default function Home({ dataList }) {
 
@@ -13,12 +14,12 @@ export default function Home({ dataList }) {
 
             <div className="container my-3">
 
-                <div className="row bg-light border rounded-3 shadow-sm overflow-hidden mb-3">
+                <div className="row bg-dark text-light border rounded-3 shadow-sm overflow-hidden mb-3">
                     <div className="col-6 d-flex justify-content-center align-items-center">
                         <div className="text-center">
                             <h1 className="m-0">Top Anime</h1>
                             <p>with highest Rating</p>
-                            <Link href="/top" className="btn btn-primary">Top Anime</Link>
+                            <Link href="/top/1" className="btn btn-primary">Top Anime</Link>
                         </div>
                     </div>
 
@@ -41,12 +42,12 @@ export default function Home({ dataList }) {
                     </div>
                 </div>
 
-                <div className="row bg-dark text-warning border rounded-3 shadow-sm overflow-hidden mb-3">
+                <div className="row bg-light border rounded-3 shadow-sm overflow-hidden mb-3">
                     <div className="col-6 d-flex justify-content-center align-items-center">
                         <div className="text-center">
                             <h1 className="m-0">Search</h1>
-                            <p>your favorite anime</p>
-                            <Link href="/search" className="btn btn-warning">Search</Link>
+                            <p>Your favorite anime</p>
+                            <Search_Content />
                         </div>
                     </div>
 

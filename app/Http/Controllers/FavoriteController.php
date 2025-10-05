@@ -15,15 +15,18 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
 
-        $favorites = favorite::where('user_id', $user->id)->paginate(1);
+        $favorites = favorite::where('user_id', $user->id)->paginate(24);
+        $wishlists_Id = $user->Wishlists()->pluck("mal_id")->toArray();
 
-        $favorites->map(function ($row) {
+        $filter_data = $favorites->map(function ($row) use ($wishlists_Id) {
             $row["genres"] = json_decode($row["genres"]);
             $row["favorited"] = true;
-            return $row;
-        });
+            $row["wishlist"] = in_array($row["mal_id"], $wishlists_Id);
 
-        return Inertia::render('Status_Content', ['dataList' => $favorites, 'status' => 'Favorites']);
+            return $row;
+        })->toArray();
+
+        return Inertia::render("Contents_page", ['title' => 'Favorites', 'status' => "Favorites", 'dataList' => $filter_data,  'statusPage' => 'pageInternal', 'pages' => $favorites]);
     }
 
 

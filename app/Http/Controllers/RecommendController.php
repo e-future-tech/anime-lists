@@ -13,6 +13,8 @@ class RecommendController extends Controller
     {
         $data = jikanModel::getByRecommendations($id);
 
-        return Inertia::render('Recommendations', ['dataList' => $data['data'], 'title' => $title]);
+        $paginated = collect($data)->forPage(10, 10);
+
+        return Inertia::render('Contents_with_min_info', ['dataList' => $data, 'status' => 'Recomendations like ' . $title]);
     }
 }

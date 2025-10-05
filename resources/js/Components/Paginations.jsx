@@ -2,6 +2,8 @@ import { Link } from '@inertiajs/react';
 
 export function Pagination({ links }) {
 
+    console.log(links)
+
     const stylePageBtn = "text-decoration-none px-2 py-1 rounded-3 border ms-1 text-dark";
 
     const stylePageBtnActive = "text-decoration-none px-2 py-1 rounded-3 border ms-1 text-sm bg-dark text-light";

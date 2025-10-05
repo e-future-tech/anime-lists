@@ -11,8 +11,9 @@ export function Search_Content() {
         setKeyword(e.target.value)
     }
 
-    function searchHandler() {
-        router.get(`/search/${keyword}`, {}, {
+    function searchHandler(e) {
+        e.preventDefault();
+        router.get(`/search/${keyword}/1`, {}, {
             preserveScroll: true,
             onStart: () => setProcessing(true),
             onFinish: () => setProcessing(false)
@@ -21,10 +22,10 @@ export function Search_Content() {
 
     return (
         <>
-            <div className="d-flex gap-1">
-                <input className="w-100" type="text" value={keyword} onChange={inputHandler} disabled={processing} />
-                <button className="btn btn-outline-dark" onClick={searchHandler} disabled={processing}>{processing ? <span className="fw-bold">Loading</span> : "Search"}</button>
-            </div>
+            <form onSubmit={searchHandler} className="d-flex gap-1">
+                <input className="form-control" type="text" value={keyword} onChange={inputHandler} disabled={processing} />
+                <button className="btn btn-outline-dark" disabled={processing}>{processing ? <span className="fw-bold">Loading</span> : "Search"}</button>
+            </form>
         </>
     )
 }

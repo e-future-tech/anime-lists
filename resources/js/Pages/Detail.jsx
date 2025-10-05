@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { Link } from '@inertiajs/react'
-import { FavoriteButtons } from "@/Components/saveButtons"
+import { Link, Head } from '@inertiajs/react'
+import { FavoriteButtons } from "@/Components/FavoriteButton"
+import { WishlistButtons } from "@/Components/WishlistButton"
 
 function PlayTrailer({ row, statusPlay, setStatusPlay }) {
 
@@ -26,13 +27,15 @@ function PlayTrailer({ row, statusPlay, setStatusPlay }) {
 }
 
 
-export default function Detail({ row }) {
+export default function Detail({ row, title }) {
 
     const [statusPlay, setStatusPlay] = useState(false)
     const spanScore = 'detail-box text-center fw-bold border-end border-2 border-dark pe-2';
 
     return (
         <>
+            <Head title={title} />
+
             <div className="container p-5">
 
                 <h4 className="detail-title fw-bold pb-1 mb-0 border-dark border-2 border-bottom">{row.title}</h4>
@@ -58,6 +61,7 @@ export default function Detail({ row }) {
                 </div>
                 <div className="d-flex gap-2 justify-content-end mb-3">
                     <FavoriteButtons row={row} />
+                    <WishlistButtons row={row} />
 
                     <Link className="btn btn-outline-dark py-0" href={`/recommendations/${row.mal_id}/${row.title}`}>See Recommendations</Link>
                 </div>

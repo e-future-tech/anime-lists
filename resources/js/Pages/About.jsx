@@ -1,5 +1,9 @@
+import { Head } from "@inertiajs/react"
+
 export default function About() {
     return (<>
+
+        <Head title="About" />
 
         <div className="border-bottom pb-3 mt-5">
             <h1 className="text-center text-secondary m-0">ABOUT ME</h1>

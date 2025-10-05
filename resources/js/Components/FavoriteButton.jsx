@@ -20,7 +20,6 @@ export function FavoriteButtons({ row }) {
             score: row.score || 0
         }, {
             preserveScroll: true,
-            onSuccess: () => alert("Added"),
             onFinish: () => setFavoriteBtn(!favoriteBtn),
             onError: (err) => alert(err)
         })
@@ -31,7 +30,6 @@ export function FavoriteButtons({ row }) {
             mal_id: row.mal_id,
         }, {
             preserveScroll: true,
-            onSuccess: () => alert("Unfavorite"),
             onFinish: () => setFavoriteBtn(!favoriteBtn),
             onError: (err) => alert(err)
         })
