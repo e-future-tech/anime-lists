@@ -13,7 +13,7 @@ export function Mini_Content({ data }) {
                         <div key={row.mal_id} className="text-center">
                             <Link href={`/detail/${row.mal_id}`} className="img-button text-decoration-none">
 
-                                <img src={row.images.webp.image_url} className="border shadow-sm object-fit-cover" style={{ width: "10rem", height: "17rem" }} />
+                                <img src={row.images.webp.large_image_url} className="border shadow-sm object-fit-cover" style={{ width: "10rem", height: "17rem" }} />
 
                                 <p className="text-color-mod fw-bold">{row.title.length > 15 ? row.title.slice(0, 15) + "..." : row.title}</p>
 

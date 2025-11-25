@@ -10,9 +10,13 @@ export default function Home({ dataList }) {
         <>
             <Head title="Home" />
 
-            <Mini_Content data={dataList} />
+
+
 
             <div className="container my-3">
+
+                <Search_Content />
+                <Mini_Content data={dataList} />
 
                 <div className="row bg-dark text-light border rounded-3 shadow-sm overflow-hidden mb-3">
                     <div className="col-6 d-flex justify-content-center align-items-center">
@@ -28,6 +32,8 @@ export default function Home({ dataList }) {
                     </div>
                 </div>
 
+
+
                 <div className="row bg-black text-white border rounded-3 shadow-sm overflow-hidden mb-3">
                     <div className="col-6 p-0">
                         <img src="/images/cover_2.jpg" className="w-100 object-fit-cover" style={style_img} />
@@ -42,12 +48,13 @@ export default function Home({ dataList }) {
                     </div>
                 </div>
 
+
+
                 <div className="row bg-light border rounded-3 shadow-sm overflow-hidden mb-3">
                     <div className="col-6 d-flex justify-content-center align-items-center">
                         <div className="text-center">
-                            <h1 className="m-0">Search</h1>
-                            <p>Your favorite anime</p>
-                            <Search_Content />
+                            <h1 className="">About Me</h1>
+                            <Link href="/about" className="btn btn-outline-dark">Click here</Link>
                         </div>
                     </div>
 
@@ -55,7 +62,10 @@ export default function Home({ dataList }) {
                         <img src="/images/cover_3.png" className="w-100 object-fit-cover" style={style_img} />
                     </div>
                 </div>
+
             </div>
+
+
         </>
     )
 }

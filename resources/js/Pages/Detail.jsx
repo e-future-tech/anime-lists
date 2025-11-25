@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link, Head } from '@inertiajs/react'
 import { FavoriteButtons } from "@/Components/FavoriteButton"
 import { WishlistButtons } from "@/Components/WishlistButton"
+import { Search_Content } from "@/Components/Search_Content";
 
 function PlayTrailer({ row, statusPlay, setStatusPlay }) {
 
@@ -36,7 +37,14 @@ export default function Detail({ row, title }) {
         <>
             <Head title={title} />
 
+
+
             <div className="container p-5">
+
+                <div className="d-flex justify-content-end mb-2">
+                    <Search_Content />
+                </div>
+
 
                 <h4 className="detail-title fw-bold pb-1 mb-0 border-dark border-2 border-bottom">{row.title}</h4>
 

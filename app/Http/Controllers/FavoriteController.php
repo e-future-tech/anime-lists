@@ -15,7 +15,7 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
 
-        $favorites = favorite::where('user_id', $user->id)->paginate(24);
+        $favorites = favorite::where('user_id', $user->id)->orderBy('title')->paginate(24);
         $wishlists_Id = $user->Wishlists()->pluck("mal_id")->toArray();
 
         $filter_data = $favorites->map(function ($row) use ($wishlists_Id) {
